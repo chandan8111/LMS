@@ -5,6 +5,7 @@ import main
 import registerPage
 import dashboard
 import pickle
+import os
 
 class loginWindow:
     def __init__(self):
@@ -67,6 +68,10 @@ class loginWindow:
                           font=("Poppins", 12, " bold"), command=self.go_Back)
         self.but.place(x=45, y=480)
 
+        self.but = Button(self.frame, text='Delete Saved Password', width=18, bg='light grey', fg='black',
+                          font=("Poppins", 12, " bold"), command=self.passw)
+        self.but.place(x=380, y=480)
+
         self.but = Button(self.frame, text='GO TO Register >>', width=18, bg='light grey', fg='black',
                           font=("Poppins", 12, " bold"), command=self.registerPage)
         self.but.place(x=720, y=480)
@@ -86,6 +91,13 @@ class loginWindow:
                 print('')
             fopen.close()
     
+    
+    def passw(self):
+        try:
+            os.remove('data.bin')
+            self.add_content()
+        except:
+            pass
 
     def login(self):
         # if else condition for user authenticate..!
@@ -116,10 +128,4 @@ class loginWindow:
     def registerPage(self):
         self.win.destroy()
         robj = registerPage.loginWindow()
-        robj.add_content()
-
-    
-
-
-    
-        
+        robj.add_content()        

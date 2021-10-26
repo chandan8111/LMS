@@ -1,8 +1,59 @@
 from tkinter import *
 from PIL import ImageTk, Image
-import os
 from tkinter import messagebox
 import loginPage
+import student.addStudent
+
+
+def userDetails():
+    pass
+
+def addStudent():
+    obj1=student.addStudent.studentWindow()
+    obj1.addframe()
+
+def updateStudent():
+    pass
+
+def deleteStudent():
+    pass
+
+def viewStudent():
+    pass
+
+def searchStudent():
+    pass
+
+def leadedByStudent():
+    pass
+
+def addBook():
+    pass
+
+def editBook():
+    pass
+
+def deleteBook():
+    pass
+
+def bookLeading():
+    pass
+
+def returnBook():
+    pass
+
+def viewBook():
+    pass
+
+def searchBook():
+    pass
+
+def report():
+    pass
+
+def about():
+    pass
+
 
 class dashBoard:
     def __init__(self):
@@ -44,7 +95,7 @@ class dashBoard:
         self.label.place(x=55, y=90)
 
         self.but = Button(self.frame, text='Detail', width=15, bg='light grey', fg='black',
-                          font=("Poppins", 13, " bold"))
+                          font=("Poppins", 13, " bold"), command=userDetails)
         self.but.place(x=450, y=90)
 
         self.but = Button(self.frame, text='Log Out', width=15, bg='light grey', fg='black',
@@ -57,27 +108,27 @@ class dashBoard:
         self.label.place(x=55, y=160)
         # Student row 1
         self.but = Button(self.frame, text='Add Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=addStudent)
         self.but.place(x=55, y=230)
 
         self.but = Button(self.frame, text='Update Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=updateStudent)
         self.but.place(x=355, y=230)
 
         self.but = Button(self.frame, text='Delete Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=deleteStudent)
         self.but.place(x=655, y=230)
         # Student row 2
         self.but = Button(self.frame, text='View Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=viewStudent)
         self.but.place(x=55, y=300)
 
         self.but = Button(self.frame, text='Search Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=searchStudent)
         self.but.place(x=355, y=300)
 
         self.but = Button(self.frame, text='Book Leaded By Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=leadedByStudent)
         self.but.place(x=655, y=300)
         
         self.label = Label(self.frame, text="BOOKS")
@@ -85,41 +136,41 @@ class dashBoard:
         self.label.place(x=55, y=370)
         # Row 1
         self.but = Button(self.frame, text='ADD BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=addBook)
         self.but.place(x=55, y=440)
 
         self.but = Button(self.frame, text='EDIT BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=editBook)
         self.but.place(x=355, y=440)
 
         self.but = Button(self.frame, text='DELETE BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=deleteBook)
         self.but.place(x=655, y=440)
 
         # Row 2
         self.but = Button(self.frame, text='BOOK LEADING', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command= bookLeading)
         self.but.place(x=55, y=510)
 
         self.but = Button(self.frame, text='RETURN BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=returnBook)
         self.but.place(x=355, y=510)
 
         self.but = Button(self.frame, text='VIEW BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=viewBook)
         self.but.place(x=655, y=510)
 
         # row 3
         self.but = Button(self.frame, text='SEARCH BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=searchBook)
         self.but.place(x=55, y=580)
 
         self.but = Button(self.frame, text='REPORT', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=report)
         self.but.place(x=355, y=580)
 
         self.but = Button(self.frame, text='ABOUT', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"))
+                          font=("Poppins", 15, " bold"), command=about)
         self.but.place(x=655, y=580)
 
     def add_frame(self):

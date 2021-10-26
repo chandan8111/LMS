@@ -29,7 +29,6 @@ class Welcome:
     def add_content(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)
-        # x, y = 70, 20
 
         self.image = ImageTk.PhotoImage(Image.open("image\lms.jpg"))
         self.label = Label(self.frame, image=self.image)
