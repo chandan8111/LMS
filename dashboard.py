@@ -1,5 +1,8 @@
 from tkinter import *
 from PIL import ImageTk, Image
+import os
+from tkinter import messagebox
+import loginPage
 
 class dashBoard:
     def __init__(self):
@@ -45,7 +48,7 @@ class dashBoard:
         self.but.place(x=450, y=90)
 
         self.but = Button(self.frame, text='Log Out', width=15, bg='light grey', fg='black',
-                          font=("Poppins", 13, " bold"))
+                          font=("Poppins", 13, " bold"), command=self.logOut)
         self.but.place(x=750, y=90)
 
         # About student Button
@@ -77,8 +80,8 @@ class dashBoard:
                           font=("Poppins", 15, " bold"))
         self.but.place(x=655, y=300)
         
-        self.label = Label(self.frame, text="Book")
-        self.label.config(font=("Courier", 20, 'underline bold'))
+        self.label = Label(self.frame, text="BOOKS")
+        self.label.config(font=("Courier", 20, 'bold'))
         self.label.place(x=55, y=370)
         # Row 1
         self.but = Button(self.frame, text='ADD BOOK', width=20, bg='light grey', fg='black',
@@ -120,8 +123,18 @@ class dashBoard:
         self.but.place(x=655, y=580)
 
     def add_frame(self):
-
+        
         self.win.mainloop()
+
+    def logOut(self):
+        self.mess = messagebox.askquestion('LogOut Account','Are you sure you want to logout the account',icon = 'warning')
+        if self.mess == 'yes':
+            self.win.destroy()
+            lobj = loginPage.loginWindow()
+            lobj.add_content()
+        else:
+            pass
+
 
 if __name__ == "__main__":
     dh = dashBoard()

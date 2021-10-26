@@ -4,6 +4,7 @@ import tkinter.messagebox as mbx
 import main
 import registerPage
 import dashboard
+import pickle
 
 class loginWindow:
     def __init__(self):
@@ -55,8 +56,9 @@ class loginWindow:
 
         self.pswd = Entry(self.frame, font="Times 12", show="*")
         self.pswd.place(x=385, y=300)
-
-        self.checkbox = Checkbutton(self.frame, text="Keep me logged in").place(x=382, y=335)
+        # Checkbox
+        self.cbv=IntVar()
+        self.checkbox = Checkbutton(self.frame, variable=self.cbv, onvalue=1, offvalue=0, text="Keep me logged in").place(x=382, y=335)
 
         self.btn = Button(self.frame, text='LOGIN', width=16, bg='light grey', fg='black', font=("Times", 13, "bold"), command=self.login)
         self.btn.place(x=382, y=370)
@@ -69,14 +71,33 @@ class loginWindow:
                           font=("Poppins", 12, " bold"), command=self.registerPage)
         self.but.place(x=720, y=480)
 
-    def login(self):
-        data = (
-            self.user.get(),
-            self.pswd.get()
-        )
+        try:
+            fopen=open("data.bin", 'rb')
+        except:
+            print('')
+        else:
+            udata=pickle.load(fopen)
+            try:
+                self.user.delete(0, END)
+                self.user.insert(0, udata[0])
+                self.pswd.delete(0, END)
+                self.pswd.insert(0, udata[1])
+            except:
+                print('')
+            fopen.close()
+    
 
+    def login(self):
         # if else condition for user authenticate..!
         if self.user.get() == "admin" and self.pswd.get() == "1234":
+
+            if self.cbv.get() == 1:
+                fname=open("data.bin", 'wb')
+                num=[self.user.get(),self.pswd.get()]
+                pickle.dump(num, fname)
+                fname.close()
+            else:
+                pass
             self.win.destroy()
             dh = dashboard.dashBoard()
             dh.add_menu()
