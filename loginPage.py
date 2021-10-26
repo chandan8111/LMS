@@ -113,7 +113,6 @@ class loginWindow:
             self.win.destroy()
             dh = dashboard.dashBoard()
             dh.add_menu()
-            dh.add_frame()
 
         else:
             mbx.showinfo("Login error", "Invalid Username & Password")

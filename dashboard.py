@@ -3,17 +3,14 @@ from PIL import ImageTk, Image
 from tkinter import messagebox
 import loginPage
 import student.addStudent
+import student.updateStudent
 
 
 def userDetails():
     pass
 
-def addStudent():
-    obj1=student.addStudent.studentWindow()
-    obj1.addframe()
 
-def updateStudent():
-    pass
+
 
 def deleteStudent():
     pass
@@ -107,13 +104,13 @@ class dashBoard:
         self.label.config(font=("Courier", 20, 'bold'))
         self.label.place(x=55, y=160)
         # Student row 1
-        self.but = Button(self.frame, text='Add Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=addStudent)
-        self.but.place(x=55, y=230)
+        self.but0 = Button(self.frame, text='Add Student', width=20, bg='light grey', fg='black',
+                          font=("Poppins", 15, " bold"), command=self.addStudent)
+        self.but0.place(x=55, y=230)
 
-        self.but = Button(self.frame, text='Update Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=updateStudent)
-        self.but.place(x=355, y=230)
+        self.but1 = Button(self.frame, text='Update Student', width=20, bg='light grey', fg='black',
+                          font=("Poppins", 15, " bold"), command=self.updateStudent)
+        self.but1.place(x=355, y=230)
 
         self.but = Button(self.frame, text='Delete Student', width=20, bg='light grey', fg='black',
                           font=("Poppins", 15, " bold"), command=deleteStudent)
@@ -173,9 +170,18 @@ class dashBoard:
                           font=("Poppins", 15, " bold"), command=about)
         self.but.place(x=655, y=580)
 
-    def add_frame(self):
-        
         self.win.mainloop()
+
+        
+    def addStudent(self):
+        self.win.destroy()
+        obj1=student.addStudent.studentWindow()
+        obj1.addframe()
+    def updateStudent(self):
+        self.win.destroy()
+        obj2=student.updateStudent.studentWindow()
+        obj2.addframe()
+
 
     def logOut(self):
         self.mess = messagebox.askquestion('LogOut Account','Are you sure you want to logout the account',icon = 'warning')
@@ -190,4 +196,3 @@ class dashBoard:
 if __name__ == "__main__":
     dh = dashBoard()
     dh.add_menu()
-    dh.add_frame()
