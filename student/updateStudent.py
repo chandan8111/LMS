@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter as tk
 import dashboard
+from PIL import ImageTk, Image
 
 
 class studentWindow:
@@ -26,6 +27,10 @@ class studentWindow:
     def addframe(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)
+
+        self.image=ImageTk.PhotoImage(Image.open("image\lmsl.jpg"))
+        self.label = Label(self.frame, image=self.image)
+        self.label.pack()
 
         self.label = Label(self.frame, text="UPDATE STUDENT", fg='black')
         self.label.config(font=("helvetica", 18, 'bold'))
@@ -107,7 +112,7 @@ class studentWindow:
         self.label4.config(font=("Times", 14, 'bold'))
         self.label4.place(x=550, y=150)
 
-        self.semester = ['None', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth']
+        self.semester = ['None', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Other']
         self.sem = tk.StringVar(self.frame)
         self.droplist = tk.OptionMenu(self.frame, self.sem, *self.semester)
         self.droplist.config(width=17)
@@ -125,7 +130,8 @@ class studentWindow:
                      "ME",
                      "CIV",
                      "EEE",
-                     "ECE"]
+                     "ECE",
+                     "Other"]
         self.dept = tk.StringVar(self.frame)
         self.drop = tk.OptionMenu(self.frame, self.dept, *self.list)
         self.drop.config(width=17)
@@ -163,9 +169,14 @@ class studentWindow:
             self.email.get(),
             self.addres.get()
         )
-        self.win.destroy()
-        dh = dashboard.dashBoard()
-        dh.add_menu()
+        for da in data:
+            if da == '' or 'None':
+                self.label7.config(fg='red')
+                self.label7.config(text='All fields are mandatory...!', font=("Poppins", 11, 'underline bold'))
+            else:
+                self.win.destroy()
+                dh = dashboard.dashBoard()
+                dh.add_menu()
 
     def gotoDash(self):
         self.win.destroy()
