@@ -2,6 +2,10 @@ from tkinter import *
 import tkinter as tk
 import dashboard
 from PIL import ImageTk, Image
+from PIL import Image, ImageTk
+import mysql.connector
+from mysql.connector import Error
+import tkinter.messagebox as mbx 
 
 
 class studentWindow:
@@ -92,8 +96,8 @@ class studentWindow:
         self.label1=Label(self.frame, text="Stuent ID")
         self.label1.config(font=("Times", 15, 'bold'))
         self.label1.place(x=550, y=50)
-        self.addres=Entry(self.frame, font="Times 12", width=18)
-        self.addres.place(x=720, y=50)
+        self.stdid=Entry(self.frame, font="Times 12", width=18)
+        self.stdid.place(x=720, y=50)
 
         # Gender
         self.label3 = Label(self.frame, text="GENDER")
@@ -148,6 +152,10 @@ class studentWindow:
         self.but = Button(self.frame, text='GO TO Menu >>', width=18, bg='light grey', fg='black',
                           font=("Poppins", 12, " bold"), command=self.gotoDash)
         self.but.place(x=125, y=480)
+        
+        self.but = Button(self.frame, text='Get data >>', width=18, bg='light grey', fg='black',
+                          font=("Poppins", 12, " bold"), command=self.getstudent)
+        self.but.place(x=625, y=430)
 
         self.but = Button(self.frame, text='Submit >>', width=18, bg='light grey', fg='black',
                           font=("Poppins", 12, " bold"), command=self.addStudent)
@@ -155,6 +163,42 @@ class studentWindow:
 
         self.win.mainloop()
     
+    def getstudent(self):
+        Studenrid= self.stdid.get()
+        try:
+            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT Sname,RollNo,RegNo,Gender,Sem,DOB,Topic,Dept,MobNo,Email,Locat FROM student where id={Studenrid}")
+            mydata=cursor.fetchall()
+            self.name.delete(0, END)
+            self.name.insert(0, mydata[0][0])
+
+            self.rollno.delete(0, END)
+            self.rollno.insert(0, mydata[0][1])
+
+            self.regno.delete(0, END)
+            self.regno.insert(0, mydata[0][2])
+
+            self.dob.delete(0, END)
+            self.dob.insert(0, mydata[0][5])
+
+            self.topic.delete(0, END)
+            self.topic.insert(0, mydata[0][6])
+
+            self.mobno.delete(0, END)
+            self.mobno.insert(0, mydata[0][8])
+
+            self.email.delete(0, END)
+            self.email.insert(0, mydata[0][9])
+
+            self.topic.delete(0, END)
+            self.topic.insert(0, mydata[0][10])
+
+            conn.close()
+
+        except Error:
+            mbx.showwarning("Server Error","Please Try Again After Restart")
+
     def addStudent(self):
         data=(
             self.name.get(),
@@ -169,21 +213,18 @@ class studentWindow:
             self.email.get(),
             self.addres.get()
         )
-        for da in data:
-            if da == '' or 'None':
-                self.label7.config(fg='red')
-                self.label7.config(text='All fields are mandatory...!', font=("Poppins", 11, 'underline bold'))
-            else:
-                self.win.destroy()
-                dh = dashboard.dashBoard()
-                dh.add_menu()
+        Studenrid= self.stdid.get()
+        try:
+            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            cursor = conn.cursor()
+            cursor.execute("UPDATE student SET Sname=%s,RollNo=%s,RegNo=%s,Gender=%s,Sem=%s,DOB=%s,Topic=%s,Dept=%s,MobNo=%s,Email=%s,Locat=%s  WHERE id=%s",(data[0],data[1],data[2],data[3],data[4],data[6],data[7],data[5],data[8],data[9],data[10],Studenrid))
+            conn.commit()
+            mbx.showinfo('Sucessfull',"Student Data Has Been Updated Added.")
+        except Error:
+            mbx.showwarning("Server Error","Please Try Again After Restart")
 
     def gotoDash(self):
         self.win.destroy()
         dh = dashboard.dashBoard()
         dh.add_menu()
-
-
-if __name__ == "__main__":
-    dh = studentWindow()
-    dh.addframe()
+        

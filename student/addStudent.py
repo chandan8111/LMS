@@ -1,8 +1,10 @@
 from tkinter import *
 import tkinter as tk
-import dashboard
-import DataBase.database 
+import dashboard   
 from PIL import Image, ImageTk
+import mysql.connector
+from mysql.connector import Error
+import tkinter.messagebox as mbx 
 
 class studentWindow:
     def __init__(self):
@@ -162,15 +164,15 @@ class studentWindow:
             self.email.get(),
             self.addres.get()
         )
-        for da in data:
-            print(da)
-            if da == '' or 'None':
-                self.label7.config(fg='red')
-                self.label7.config(text='All fields are mandatory...!', font=("Poppins", 11, 'underline bold'))
-            else:
-                self.win.destroy()
-                dh = dashboard.dashBoard()
-                dh.add_menu()
+        try:
+            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO student(Sname,RollNo,RegNo,Gender,Sem,DOB,Topic,Dept,MobNo,Email,Locat) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(data[0],data[1],data[2],data[3],data[4],data[6],data[7],data[5],data[8],data[9],data[10]))
+            conn.commit()
+            mbx.showinfo('Sucessfull',"Your Data Has Been Added.")
+        except Error:
+            mbx.showwarning("Server Error","Please Try Again After Restart")
+
 
     def gotoDash(self):
         self.win.destroy()

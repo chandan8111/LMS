@@ -4,7 +4,8 @@ from tkinter import messagebox
 import loginPage
 import student.addStudent
 import student.updateStudent
-
+import student.viewStudent
+import student.searchStudent
 
 def userDetails():
     pass
@@ -15,11 +16,6 @@ def userDetails():
 def deleteStudent():
     pass
 
-def viewStudent():
-    pass
-
-def searchStudent():
-    pass
 
 def leadedByStudent():
     pass
@@ -117,11 +113,11 @@ class dashBoard:
         self.but.place(x=655, y=230)
         # Student row 2
         self.but = Button(self.frame, text='View Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=viewStudent)
+                          font=("Poppins", 15, " bold"), command=self.viewStudent)
         self.but.place(x=55, y=300)
 
         self.but = Button(self.frame, text='Search Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=searchStudent)
+                          font=("Poppins", 15, " bold"), command=self.searchStudent)
         self.but.place(x=355, y=300)
 
         self.but = Button(self.frame, text='Book Leaded By Student', width=20, bg='light grey', fg='black',
@@ -181,6 +177,14 @@ class dashBoard:
         self.win.destroy()
         obj2=student.updateStudent.studentWindow()
         obj2.addframe()
+    def viewStudent(self):
+        self.win.destroy()
+        obj=student.viewStudent.studentWindow()
+        obj.addframe()
+    def searchStudent(self):
+        self.win.destroy()
+        obj=student.searchStudent.studentWindow()
+        obj.addframe()
 
 
     def logOut(self):
