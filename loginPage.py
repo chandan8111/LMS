@@ -6,6 +6,8 @@ import registerPage
 import dashboard
 import pickle
 import os
+import mysql.connector
+from mysql.connector import Error
 
 class loginWindow:
     def __init__(self):
@@ -100,22 +102,32 @@ class loginWindow:
             pass
 
     def login(self):
-        # if else condition for user authenticate..!
-        if self.user.get() == "admin" and self.pswd.get() == "1234":
-
-            if self.cbv.get() == 1:
-                fname=open("data.bin", 'wb')
-                num=[self.user.get(),self.pswd.get()]
-                pickle.dump(num, fname)
-                fname.close()
-            else:
-                pass
-            self.win.destroy()
-            dh = dashboard.dashBoard()
-            dh.add_menu()
-
+        if len(self.user.get()) == 0 or len(self.pswd.get())==0:
+            mbx.showinfo("INVALID USERNAME OR PASSWORD")
         else:
-            mbx.showinfo("Login error", "Invalid Username & Password")
+            try:
+                conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+                cursor = conn.cursor()
+                fuser=self.user.get()
+                fpass=self.pswd.get()
+                cursor.execute('''Select * from `LIBRARIAN` where L_Email= %s AND L_Password = %s ''',(fuser,fpass))
+                pcD = cursor.fetchone()
+                if pcD:
+                    if self.cbv.get() == 1:
+                        fname=open("data.bin", 'wb')
+                        num=[self.user.get(),self.pswd.get()]
+                        pickle.dump(num, fname)
+                        fname.close()
+                    else:
+                        pass
+                    self.win.destroy()
+                    sh=dashboard.dashBoard()
+                    sh.add_menu()
+                else:
+                    mbx.showinfo("Login error", "Username and password not found")
+            except Error:
+                mbx.showinfo('Servor Error', "Something Goes Wrong with server,\n Try restarting")
+
 
         self.win.mainloop()
 
