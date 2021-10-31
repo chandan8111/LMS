@@ -5,6 +5,15 @@ import tkinter.messagebox as mbx
 import main
 import loginPage
 import random
+import pickle
+# for email
+import smtplib, ssl
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import mysql.connector
+from mysql.connector import Error
+import time
+import dashboard
 
 class loginWindow:
     def __init__(self):
@@ -56,16 +65,11 @@ class loginWindow:
         self.lib_name.place(x=450, y=125)
 
         # Gender
-        self.label3 = Label(self.frame, text="GENDER")
+        self.label3 = Label(self.frame, text="Password")
         self.label3.config(font=("Times", 14, 'bold'))
         self.label3.place(x=200, y=175)
-
-        self.gender = ['None                                                 ', 'Male', 'Female', 'Other']
-        self.gen = tk.StringVar(self.frame)
-        self.droplist = tk.OptionMenu(self.frame, self.gen, *self.gender)
-        self.droplist.config(width=30)
-        self.gen.set(self.gender[0])
-        self.droplist.place(x=450, y=175)
+        self.Password=Entry(self.frame, font="Times 12", width=30)
+        self.Password.place(x=450, y=175)
 
         # MObile No.
         self.label1=Label(self.frame, text="Mobile No")
@@ -84,16 +88,22 @@ class loginWindow:
         self.label7.config(font=("Poppins", 11, 'underline bold'))
         self.label7.place(x=320, y=310)
 
-        self.but = Button(self.frame, text='Send OTP', width=18, bg='light grey', fg='black',
+        self.otpbut = Button(self.frame, text='Send OTP', width=18, bg='light grey', fg='black',
                           font=("Poppins", 12, " bold"), command=self.sendotp)
-        self.but.place(x=350, y=350)
+        self.otpbut.place(x=350, y=350)
 
         # OTP ENTER
-        self.label1=Label(self.frame, text="Enter OTP")
+        self.label1=Label(self.frame, text="Admin OTP")
         self.label1.config(font=("Times", 15, 'bold'))
-        self.label1.place(x=300, y=400)
-        self.otp=Entry(self.frame, font="Times 15", width=15)
-        self.otp.place(x=450, y=400)
+        self.label1.place(x=150, y=400)
+        self.otp=Entry(self.frame, font="Times 15", width=10)
+        self.otp.place(x=300, y=400)
+
+        self.label1=Label(self.frame, text="Client OTP")
+        self.label1.config(font=("Times", 15, 'bold'))
+        self.label1.place(x=450, y=400)
+        self.otp2=Entry(self.frame, font="Times 15", width=10)
+        self.otp2.place(x=600, y=400)
 
         self.but = Button(self.frame, text='Submit', width=18, bg='light grey', fg='black',
                           font=("Poppins", 12, " bold"), command=self.fsubmit)
@@ -123,15 +133,75 @@ class loginWindow:
         lobj.add_content()
 
     def sendotp(self):
-        self.popt=mbx.showinfo(title="About otp", message="For OTP contact the Software Manager or library Manager ")
-        genotp = random.randrange(111111,999999,1)
-        print(genotp)
+        self.genotp = random.randrange(111111,999999,1)
+        self.genotp2 = random.randrange(111111,999999,1)
+        self.ownername.config(state=DISABLED)
+        self.lib_name.config(state=DISABLED)
+        self.Password.config(state=DISABLED)
+        self.lmobno.config(state=DISABLED)
+        self.lemail.config(state=DISABLED)
+        client_name=self.ownername.get()
+        libr_name=self.lib_name.get()
+        client_email=self.lemail.get()
+        subject=f"{client_name} Account Otp"
+        content = f"{client_name} Registration Otp. Library name {libr_name}. His otp is {self.genotp}"
+        content2 = f"{client_name} Registration Otp. Library name {libr_name}. His otp is {self.genotp2}"
+        try:
+            self.otpbut.config(state=DISABLED)
+            # for content one
+            message = MIMEMultipart()
+            message['From'] = 'lmsp275@gmail.com'
+            message['To'] = 'bestangleon@gmail.com'
+            message['Subject'] = subject
+            message.attach(MIMEText(content, 'plain'))
+            # FOR 2
+            message1 = MIMEMultipart()
+            message1['From'] = 'lmsp275@gmail.com'
+            message1['To'] = client_email
+            message1['Subject'] = subject
+            message1.attach(MIMEText(content2, 'plain'))
+
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login('lmsp275@gmail.com', 'LMS@2ndsem')
+            text=message.as_string()
+            text1=message1.as_string()
+            server.sendmail('lmsp275@gmail.com', 'bestangleon@gmail.com',text)
+            server.sendmail('lmsp275@gmail.com', client_email,text)
+        except:
+            self.popt=mbx.showwarning(title="About otp", message="Somthing Wrong. Check your Email Id and try Again")
+            self.otpbut.config(state=NORMAL)
+        else:
+            server.quit()
+            self.popt=mbx.showinfo(title="About otp", message="succesfully send otp. For OTP contact the Software Manager or library Manager ")
+            self.otpbut.config(state=NORMAL)
+        
+
 
     def fsubmit(self):
-        data=(
-            self.ownername.get(),
-            self.lib_name.get(),
-            self.gen.get(),
-            self.lmobno.get(),
-            self.lemail.get()
-        )
+        owner=self.ownername.get()
+        library=self.lib_name.get()
+        passw=self.Password.get()
+        mob=self.lmobno.get()
+        email=self.lemail.get()
+        if((str(self.genotp)==self.otp.get())and(str(self.genotp2)==self.otp2.get())):
+            try:
+                conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+                cursor = conn.cursor()
+                cursor.execute("INSERT INTO librarian(O_Name,L_Name,L_Password,L_MobNo,L_Email) VALUES(%s,%s,%s,%s,%s)",(owner,library,passw,mob,email))
+                conn.commit()
+                conn.close()
+                mbx.showinfo('Sucessfull',"Your Data Has Been Added.")
+                time.sleep(3)
+                fname=open("data.bin", 'wb')
+                num=[email,passw]
+                pickle.dump(num, fname)
+                fname.close()
+                self.win.destroy()
+                sh=dashboard.dashBoard()
+                sh.add_menu()
+            except Error:
+                mbx.showwarning("Server Error","Please Try Again After Restart")
+
+        else:
+            mbx.showwarning("OTP","Plese Check again your otp")
