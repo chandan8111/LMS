@@ -178,7 +178,3 @@ class studentWindow:
         self.win.destroy()
         dh = dashboard.dashBoard()
         dh.add_menu()
-
-if __name__ == "__main__":
-    dh = studentWindow()
-    dh.addframe()
