@@ -8,36 +8,16 @@ import student.viewStudent
 import student.searchStudent
 import student.deleteStudent
 import book.addBook
-import book.viewBook
 import book.editBook
-
-
-def userDetails():
-    pass
-
-
-
-
+import book.searchBook
 
 def leadedByStudent():
-    pass
-
-
-
-
-
-def deleteBook():
     pass
 
 def bookLeading():
     pass
 
 def returnBook():
-    pass
-
-
-
-def searchBook():
     pass
 
 def report():
@@ -52,15 +32,15 @@ class dashBoard:
         self.win = Tk()
 
         # window background color using canvas
-        self.canvas = Canvas(self.win, width=960, height=670, bg='white')
+        self.canvas = Canvas(self.win, width=960, height=600, bg='white')
         self.canvas.pack(expand=YES, fill=BOTH)
 
         # show window in center of the screen
         width = self.win.winfo_screenwidth()
         height = self.win.winfo_screenheight()
         x = int(width / 2 - 960 / 2)
-        y = int(height / 2 - 670 / 2)
-        str1 = "960x670+" + str(x) + "+" + str(y)
+        y = int(height / 2 - 600 / 2)
+        str1 = "960x600+" + str(x) + "+" + str(y)
         self.win.geometry(str1)
 
         self.win.resizable(False, False)
@@ -69,7 +49,7 @@ class dashBoard:
         self.win.title("| DASHBOARD | LIBRARY MANAGEMENT SYSTEM |")
     
     def add_menu(self):
-        self.frame = Frame(self.win, height=670, width=960)
+        self.frame = Frame(self.win, height=600, width=960)
         self.frame.place(x=0, y=0)
 
         self.image = ImageTk.PhotoImage(Image.open("image\lmsd.jpg"))
@@ -82,12 +62,10 @@ class dashBoard:
         self.label.place(x=170, y=20)
 
         # Detail button and logout
-        self.label = Label(self.frame, text="Chandan")
-        self.label.config(font=("Courier", 20))
-        self.label.place(x=55, y=90)
+        
 
-        self.but = Button(self.frame, text='Detail', width=15, bg='light grey', fg='black',
-                          font=("Poppins", 13, " bold"), command=userDetails)
+        self.but = Button(self.frame, text='REPORT', width=15, bg='light grey', fg='black',
+                          font=("Poppins", 13, " bold"), command=report)
         self.but.place(x=450, y=90)
 
         self.but = Button(self.frame, text='Log Out', width=15, bg='light grey', fg='black',
@@ -135,8 +113,8 @@ class dashBoard:
                           font=("Poppins", 15, " bold"), command=self.editBook)
         self.but.place(x=355, y=440)
 
-        self.but = Button(self.frame, text='DELETE BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=deleteBook)
+        self.but = Button(self.frame, text='SEARCH AND DELETE', width=20, bg='light grey', fg='black',
+                          font=("Poppins", 15, " bold"), command=self.sedelBook)
         self.but.place(x=655, y=440)
 
         # Row 2
@@ -148,31 +126,20 @@ class dashBoard:
                           font=("Poppins", 15, " bold"), command=returnBook)
         self.but.place(x=355, y=510)
 
-        self.but = Button(self.frame, text='VIEW BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=self.viewBook)
-        self.but.place(x=655, y=510)
-
-        # row 3
-        self.but = Button(self.frame, text='SEARCH BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=searchBook)
-        self.but.place(x=55, y=580)
-
-        self.but = Button(self.frame, text='REPORT', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=report)
-        self.but.place(x=355, y=580)
-
         self.but = Button(self.frame, text='ABOUT', width=20, bg='light grey', fg='black',
                           font=("Poppins", 15, " bold"), command=about)
-        self.but.place(x=655, y=580)
+        self.but.place(x=655, y=510)
+
 
         self.win.mainloop()
-    
 
-    def viewBook(self):
+
+
+    def sedelBook(self):
         self.win.destroy()
-        obj=book.viewBook.mainWindow()
+        obj=book.searchBook.mainWindow()
         obj.addframe()
-
+ 
     def editBook(self):
         self.win.destroy()
         obj=book.editBook.mainWindow()
@@ -211,8 +178,6 @@ class dashBoard:
             self.win.destroy()
             lobj = loginPage.loginWindow()
             lobj.add_content()
-        else:
-            pass
 
 
 if __name__ == "__main__":
