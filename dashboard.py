@@ -6,6 +6,7 @@ import student.addStudent
 import student.updateStudent
 import student.viewStudent
 import student.searchStudent
+import student.deleteStudent
 import book.addBook
 import book.viewBook
 import book.editBook
@@ -16,9 +17,6 @@ def userDetails():
 
 
 
-
-def deleteStudent():
-    pass
 
 
 def leadedByStudent():
@@ -110,7 +108,7 @@ class dashBoard:
         self.but1.place(x=355, y=230)
 
         self.but = Button(self.frame, text='Delete Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=deleteStudent)
+                          font=("Poppins", 15, " bold"), command=self.deleteStudent)
         self.but.place(x=655, y=230)
         # Student row 2
         self.but = Button(self.frame, text='View Student', width=20, bg='light grey', fg='black',
@@ -200,6 +198,10 @@ class dashBoard:
     def searchStudent(self):
         self.win.destroy()
         obj=student.searchStudent.studentWindow()
+        obj.addframe()
+    def deleteStudent(self):
+        self.win.destroy()
+        obj=student.deleteStudent.studentWindow()
         obj.addframe()
 
 

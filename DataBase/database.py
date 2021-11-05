@@ -7,17 +7,11 @@ config={
     'database': 'lms'
 }
 
-data=(
-    "rama",
-    "n. raj",
-    200,
-    34,
-    "rsg",
-)
 
 
-std=3457
+
+std=25
 conn = mysql.connector.connect(**config)
 cursor = conn.cursor()
-cursor.execute(f"UPDATE book SET title={data[0]},author={data[1]},publishedYear={data[2]},totalPage={data[3]},category={data[4]}  WHERE id={std}")
+cursor.execute(f"DELETE FROM student WHERE id={std}")
 conn.commit()
