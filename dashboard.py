@@ -10,18 +10,15 @@ import student.deleteStudent
 import book.addBook
 import book.editBook
 import book.searchBook
+import book.bookLeading
+import book.returnBook
+
+
+
 
 def leadedByStudent():
     pass
 
-def bookLeading():
-    pass
-
-def returnBook():
-    pass
-
-def report():
-    pass
 
 def about():
     pass
@@ -61,12 +58,8 @@ class dashBoard:
         self.label.config(font=("Courier", 20, 'underline bold'))
         self.label.place(x=170, y=20)
 
-        # Detail button and logout
-        
+        #  logout
 
-        self.but = Button(self.frame, text='REPORT', width=15, bg='light grey', fg='black',
-                          font=("Poppins", 13, " bold"), command=report)
-        self.but.place(x=450, y=90)
 
         self.but = Button(self.frame, text='Log Out', width=15, bg='light grey', fg='black',
                           font=("Poppins", 13, " bold"), command=self.logOut)
@@ -119,11 +112,11 @@ class dashBoard:
 
         # Row 2
         self.but = Button(self.frame, text='BOOK LEADING', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command= bookLeading)
+                          font=("Poppins", 15, " bold"), command= self.bookLeading)
         self.but.place(x=55, y=510)
 
         self.but = Button(self.frame, text='RETURN BOOK', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=returnBook)
+                          font=("Poppins", 15, " bold"), command=self.returnBook)
         self.but.place(x=355, y=510)
 
         self.but = Button(self.frame, text='ABOUT', width=20, bg='light grey', fg='black',
@@ -133,7 +126,15 @@ class dashBoard:
 
         self.win.mainloop()
 
+    def returnBook(self):
+        self.win.destroy()
+        obj=book.returnBook.mainWindow()
+        obj.addframe()
 
+    def bookLeading(self):
+        self.win.destroy()
+        obj=book.bookLeading.mainWindow()
+        obj.addframe()
 
     def sedelBook(self):
         self.win.destroy()
@@ -170,6 +171,8 @@ class dashBoard:
         self.win.destroy()
         obj=student.deleteStudent.studentWindow()
         obj.addframe()
+
+
 
 
     def logOut(self):
