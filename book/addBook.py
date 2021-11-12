@@ -94,15 +94,6 @@ class mainWindow:
 
 
 
-
-
-
-
-
-
-
-
-
         self.but = Button(self.frame, text='GO TO Menu >>', width=18, bg='light grey', fg='black',
                           font=("Poppins", 12, " bold"), command=self.gotoDash)
         self.but.place(x=150, y=430)

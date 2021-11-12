@@ -39,11 +39,6 @@ class mainWindow:
         self.label.config(font=("helvetica", 18, 'bold'))
         self.label.place(x=250, y=15)
 
-        
-
-
-
-
 
         self.tr = Treeview(self.frame, columns=('A', 'B', 'C', 'D', 'E'), selectmode="extended", height=10)
 
@@ -61,7 +56,7 @@ class mainWindow:
         self.tr.column('#5', minwidth=0, width=150, stretch=NO)
 
 
-        self.tr.place(x=75, y=200)
+        self.tr.place(x=75, y=150)
         self.tr.bind('<<TreeviewSelect>>',self.item_selected)
 
         try:

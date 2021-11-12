@@ -25,7 +25,7 @@ class mainWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title(" ADD BOOK | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title(" BOOL LENDING | LIBRARY MANAGEMENT SYSTEM |")
     def addframe(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)
@@ -35,7 +35,7 @@ class mainWindow:
         self.label.pack()
 
 
-        self.label = Label(self.frame, text="LEADING BOOKS", fg='black')
+        self.label = Label(self.frame, text="LENDING BOOKS", fg='black')
         self.label.config(font=("helvetica", 20))
         self.label.place(x=350, y=10)
 
@@ -73,6 +73,8 @@ class mainWindow:
         self.booklist.bind('<<ListboxSelect>>', self.getElement)
 
 
+        
+
 
 
         self.but = Button(self.frame, text='<< GO TO Menu', width=18, bg='light grey', fg='black',
@@ -101,10 +103,15 @@ class mainWindow:
                         cursor.execute(f"SELECT totalPage FROM book where id={ci}")
                         bvi=cursor.fetchone()
                         if bvi:
-                            cursor.execute("INSERT INTO booklead(student_id,book_id,lead_time,lead_status) VALUES(%s,%s,%s,%s)",(sid,ci,tim,0))
+                            cursor.execute(f"SELECT id FROM booklead where book_id={ci} AND student_id={sid} AND lead_status=0")
+                            df = cursor.fetchone()
+                            if df:
+                                mbx.showinfo('warning',f'You have already leaded this book {ci}')
+                            else:
+                                cursor.execute("INSERT INTO booklead(student_id,book_id,lead_time,lead_status) VALUES(%s,%s,%s,%s)",(sid,ci,tim,0))
                         else:
                             mbx.showinfo('NOt Found',f''' Book Id "{ci}" has been not found''')
-                mbx.showinfo('Sucessfull', "Your Data Has Been Uploaded into Database.")
+                mbx.showinfo('Fun', "Your Data Processed with out any error.")
                         
             else:
                 mbx.showinfo('Not Found','Student Id Not found')

@@ -27,7 +27,7 @@ class studentWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title(" Search Student Data | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title(" SEARCH STUDENT DATA | LIBRARY MANAGEMENT SYSTEM |")
     def addframe(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)

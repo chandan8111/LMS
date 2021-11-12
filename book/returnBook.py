@@ -25,7 +25,7 @@ class mainWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title(" ADD BOOK | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title(" RETURN LENDING BOOKS | LIBRARY MANAGEMENT SYSTEM |")
     def addframe(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)
@@ -40,7 +40,7 @@ class mainWindow:
         self.label.place(x=350, y=10)
 
         # LEADING 
-        self.label1 = Label(self.frame, text="LEADING ID :")
+        self.label1 = Label(self.frame, text="LENDING ID :")
         self.label1.config(font=("Times", 15, 'bold'))
         self.label1.place(x=150, y=125)
 
@@ -76,6 +76,11 @@ class mainWindow:
         self.booklist.place(x=650,y=75)
 
 
+        self.label = Label(self.frame, text="For Return The Book Select bookid from listbox and press submit button", fg='red')
+        self.label.config(font=("Times", 12))
+        self.label.place(x=150, y=380)
+
+
         self.but = Button(self.frame, text='<< GO TO Menu', width=18, bg='light grey', fg='black',
                           font=("Poppins", 12, " bold"), command=self.gotoDash)
         self.but.place(x=150, y=430)
@@ -91,9 +96,6 @@ class mainWindow:
         sid=self.bid.get()
         tim = date.today()
         selected_item= self.booklist.curselection()
-        for item in selected_item:
-            r = self.booklist.get(item)
-            print(r[0])
         try:
             conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
             cursor = conn.cursor()
@@ -124,7 +126,7 @@ class mainWindow:
                 self.bid.delete(0, END)
                 self.bid.insert(0, book[0][1])
             except:
-                mbx.showinfo('Not Found',f'Leading ID {lead_id} has been not found.')
+                mbx.showinfo('Not Found',f'Lending ID {lead_id} has been not found.')
         except:
             mbx.showinfo('Failed','Can not connect to database. Try Again')
 

@@ -7,22 +7,13 @@ import student.updateStudent
 import student.viewStudent
 import student.searchStudent
 import student.deleteStudent
+import student.leadedByStudent
 import book.addBook
 import book.editBook
 import book.searchBook
 import book.bookLeading
 import book.returnBook
-
-
-
-
-def leadedByStudent():
-    pass
-
-
-def about():
-    pass
-
+import other.about
 
 class dashBoard:
     def __init__(self):
@@ -90,8 +81,8 @@ class dashBoard:
                           font=("Poppins", 15, " bold"), command=self.searchStudent)
         self.but.place(x=355, y=300)
 
-        self.but = Button(self.frame, text='Book Leaded By Student', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=leadedByStudent)
+        self.but = Button(self.frame, text='LENDED BOOKS', width=20, bg='light grey', fg='black',
+                          font=("Poppins", 15, " bold"), command=self.leadedByStudent)
         self.but.place(x=655, y=300)
         
         self.label = Label(self.frame, text="BOOKS")
@@ -111,7 +102,7 @@ class dashBoard:
         self.but.place(x=655, y=440)
 
         # Row 2
-        self.but = Button(self.frame, text='BOOK LEADING', width=20, bg='light grey', fg='black',
+        self.but = Button(self.frame, text='BOOK LENDING', width=20, bg='light grey', fg='black',
                           font=("Poppins", 15, " bold"), command= self.bookLeading)
         self.but.place(x=55, y=510)
 
@@ -120,12 +111,15 @@ class dashBoard:
         self.but.place(x=355, y=510)
 
         self.but = Button(self.frame, text='ABOUT', width=20, bg='light grey', fg='black',
-                          font=("Poppins", 15, " bold"), command=about)
+                          font=("Poppins", 15, " bold"), command=self.about)
         self.but.place(x=655, y=510)
 
 
         self.win.mainloop()
 
+
+    def about(self):
+        pass
     def returnBook(self):
         self.win.destroy()
         obj=book.returnBook.mainWindow()
@@ -150,23 +144,32 @@ class dashBoard:
         self.win.destroy()
         obj=book.addBook.mainWindow()
         obj.addframe()
-        
+    
+    def leadedByStudent(self):
+        self.win.destroy()
+        obj=student.leadedByStudent.studentWindow()
+        obj.addframe()
+
     def addStudent(self):
         self.win.destroy()
         obj1=student.addStudent.studentWindow()
         obj1.addframe()
+
     def updateStudent(self):
         self.win.destroy()
         obj2=student.updateStudent.studentWindow()
         obj2.addframe()
+
     def viewStudent(self):
         self.win.destroy()
         obj=student.viewStudent.studentWindow()
         obj.addframe()
+
     def searchStudent(self):
         self.win.destroy()
         obj=student.searchStudent.studentWindow()
         obj.addframe()
+
     def deleteStudent(self):
         self.win.destroy()
         obj=student.deleteStudent.studentWindow()
