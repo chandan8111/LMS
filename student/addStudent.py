@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
-
+from store import config
 class studentWindow:
     def __init__(self):
         self.win = Tk()
@@ -165,7 +165,7 @@ class studentWindow:
             self.addres.get()
         )
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute("INSERT INTO student(Sname,RollNo,RegNo,Gender,Sem,DOB,Topic,Dept,MobNo,Email,Locat) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(data[0],data[1],data[2],data[3],data[4],data[6],data[7],data[5],data[8],data[9],data[10]))
             conn.commit()

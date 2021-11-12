@@ -97,7 +97,7 @@ class dashBoard:
                           font=("Poppins", 15, " bold"), command=self.editBook)
         self.but.place(x=355, y=440)
 
-        self.but = Button(self.frame, text='SEARCH AND DELETE', width=20, bg='light grey', fg='black',
+        self.but = Button(self.frame, text='VIEW AND DELETE', width=20, bg='light grey', fg='black',
                           font=("Poppins", 15, " bold"), command=self.sedelBook)
         self.but.place(x=655, y=440)
 
@@ -119,7 +119,10 @@ class dashBoard:
 
 
     def about(self):
-        pass
+        self.win.destroy()
+        obj=other.about.Window()
+        obj.addframe()
+        
     def returnBook(self):
         self.win.destroy()
         obj=book.returnBook.mainWindow()
@@ -184,8 +187,3 @@ class dashBoard:
             self.win.destroy()
             lobj = loginPage.loginWindow()
             lobj.add_content()
-
-
-if __name__ == "__main__":
-    dh = dashBoard()
-    dh.add_menu()

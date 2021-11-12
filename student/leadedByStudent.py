@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
-
+from store import config
 
 class studentWindow:
     def __init__(self):
@@ -80,7 +80,7 @@ class studentWindow:
 
 
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT * FROM booklead")
             mydata=cursor.fetchall()
@@ -121,7 +121,7 @@ class studentWindow:
         self.tr.place(x=150, y=100)
         sid = self.sid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT * FROM booklead WHERE student_id={sid}")
             mydata=cursor.fetchall()
@@ -154,7 +154,7 @@ class studentWindow:
         self.tr.place(x=150, y=100)
         bid = self.bid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT * FROM booklead WHERE book_id={bid}")
             mydata=cursor.fetchall()

@@ -6,6 +6,7 @@ import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
 from datetime import date
+from store import config
 class mainWindow:
     def __init__(self):
         self.win = Tk()
@@ -97,7 +98,7 @@ class mainWindow:
         tim = date.today()
         selected_item= self.booklist.curselection()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             for item in selected_item:
                 bid = self.booklist.get(item)
@@ -115,7 +116,7 @@ class mainWindow:
     def leadid(self):
         lead_id = self.sid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             try:
                 cursor.execute(f"SELECT book_id,student_id FROM booklead where id={lead_id} AND lead_status=0")
@@ -133,7 +134,7 @@ class mainWindow:
     def studentid(self):
         stu_id = self.bid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT book_id FROM booklead where student_id={stu_id} AND lead_status=0")
             book = cursor.fetchall()

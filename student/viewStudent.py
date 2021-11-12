@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
-
+from store import config
 
 class studentWindow:
     def __init__(self):
@@ -27,7 +27,7 @@ class studentWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title(" View Student Data | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title(" VIEW STUDENT DATA | LIBRARY MANAGEMENT SYSTEM |")
     def addframe(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)
@@ -67,7 +67,7 @@ class studentWindow:
 
 
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT id,Sname,RegNo,Gender,Sem,Dept,MobNo,Email FROM student")
             mydata=cursor.fetchall()

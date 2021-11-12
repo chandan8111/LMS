@@ -14,7 +14,7 @@ import mysql.connector
 from mysql.connector import Error
 import time
 import dashboard
-
+from store import config
 class loginWindow:
     def __init__(self):
         self.win = Tk()
@@ -34,7 +34,7 @@ class loginWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title("Login | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title("REGISTER | LIBRARY MANAGEMENT SYSTEM |")
     
     def add_content(self):
         self.frame = Frame(self.win, height=540, width=960)
@@ -186,7 +186,7 @@ class loginWindow:
         email=self.lemail.get()
         if((str(self.genotp)==self.otp.get())and(str(self.genotp2)==self.otp2.get())):
             try:
-                conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+                conn = mysql.connector.connect(**config)
                 cursor = conn.cursor()
                 cursor.execute("INSERT INTO librarian(O_Name,L_Name,L_Password,L_MobNo,L_Email) VALUES(%s,%s,%s,%s,%s)",(owner,library,passw,mob,email))
                 conn.commit()

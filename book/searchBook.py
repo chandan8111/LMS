@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
-
+from store import config
 class mainWindow:
     def __init__(self):
         self.win = Tk()
@@ -26,7 +26,7 @@ class mainWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title(" SEARCH AND DELETE BOOK | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title(" VIEW AND DELETE BOOK | LIBRARY MANAGEMENT SYSTEM |")
     def addframe(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)
@@ -35,7 +35,7 @@ class mainWindow:
         self.label = Label(self.frame, image=self.image)
         self.label.pack()
 
-        self.label = Label(self.frame, text="SEARCH AND DELETE BOOK DATA", fg='black')
+        self.label = Label(self.frame, text="VIEW AND DELETE BOOK DATA", fg='black')
         self.label.config(font=("helvetica", 18, 'bold'))
         self.label.place(x=250, y=15)
 
@@ -60,7 +60,7 @@ class mainWindow:
         self.tr.bind('<<TreeviewSelect>>',self.item_selected)
 
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT id,title,author,publishedYear,totalPage,category FROM book")
             mydata=cursor.fetchall()
@@ -104,7 +104,7 @@ class mainWindow:
         ask = mbx.askquestion("Confermation","Do You want to delete selected student.",icon ='question')
         if ask == 'yes':
             try:
-                conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+                conn = mysql.connector.connect(**config)
                 cursor=conn.cursor()
                 cursor.execute(f"DELETE FROM book WHERE id={ite}")
                 conn.commit()

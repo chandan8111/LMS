@@ -6,6 +6,7 @@ import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
 from datetime import date
+from store import config
 class mainWindow:
     def __init__(self):
         self.win = Tk()
@@ -93,7 +94,7 @@ class mainWindow:
         bid = self.bookid
         tim = date.today()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT RegNo FROM student where id={sid}")
             avi = cursor.fetchone()

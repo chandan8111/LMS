@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
-
+from store import config
 class mainWindow:
     def __init__(self):
         self.win = Tk()
@@ -122,7 +122,7 @@ class mainWindow:
     def check(self):
         bookid= self.bid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT title,author,publishedYear,totalPage,category FROM book where id={bookid}")
             mydata=cursor.fetchall()
@@ -156,7 +156,7 @@ class mainWindow:
         )
         bookid= self.bid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             # cursor.execute(f"UPDATE book SET title={data[0]},author={data[1]},publishedYear={data[2]},totalPage={data[3]},category={data[4]}  WHERE id={booid}")
             cursor.execute("UPDATE book SET title=%s,author=%s,publishedYear=%s,totalPage=%s,category=%s  WHERE id=%s",(data[0],data[1],data[2],data[3],data[4],bookid))

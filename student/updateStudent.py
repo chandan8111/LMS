@@ -6,7 +6,7 @@ from PIL import Image, ImageTk
 import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
-
+from store import config
 
 class studentWindow:
     def __init__(self):
@@ -27,7 +27,7 @@ class studentWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title(" Edit Student Data | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title(" UPDATE STUDENT DATA | LIBRARY MANAGEMENT SYSTEM |")
     def addframe(self):
         self.frame = Frame(self.win, height=540, width=960)
         self.frame.place(x=0, y=0)
@@ -166,7 +166,7 @@ class studentWindow:
     def getstudent(self):
         Studenrid= self.stdid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT Sname,RollNo,RegNo,Gender,Sem,DOB,Topic,Dept,MobNo,Email,Locat FROM student where id={Studenrid}")
             mydata=cursor.fetchall()
@@ -215,7 +215,7 @@ class studentWindow:
         )
         Studenrid= self.stdid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute("UPDATE student SET Sname=%s,RollNo=%s,RegNo=%s,Gender=%s,Sem=%s,DOB=%s,Topic=%s,Dept=%s,MobNo=%s,Email=%s,Locat=%s  WHERE id=%s",(data[0],data[1],data[2],data[3],data[4],data[6],data[7],data[5],data[8],data[9],data[10],Studenrid))
             conn.commit()

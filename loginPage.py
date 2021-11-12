@@ -8,7 +8,7 @@ import pickle
 import os
 import mysql.connector
 from mysql.connector import Error
-
+from store import config
 class loginWindow:
     def __init__(self):
         self.win = Tk()
@@ -28,7 +28,7 @@ class loginWindow:
         self.win.resizable(False, False)
 
         # Title of the window
-        self.win.title("Login | LIBRARY MANAGEMENT SYSTEM |")
+        self.win.title("LOGIN | LIBRARY MANAGEMENT SYSTEM |")
     
     def add_content(self):
         self.frame = Frame(self.win, height=540, width=960)
@@ -45,7 +45,7 @@ class loginWindow:
         self.label.place(x=380, y=180)
 
         # creating username label and entry field
-        self.label1 = Label(self.frame, text="USERNAME")
+        self.label1 = Label(self.frame, text="EMAIL ID")
         self.label1.config(font=("Times", 16, 'bold'))
         self.label1.place(x=240, y=250)
 
@@ -106,7 +106,7 @@ class loginWindow:
             mbx.showinfo("INVALID USERNAME OR PASSWORD")
         else:
             try:
-                conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+                conn = mysql.connector.connect(**config)
                 cursor = conn.cursor()
                 fuser=self.user.get()
                 fpass=self.pswd.get()

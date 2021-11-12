@@ -6,7 +6,7 @@ from PIL import Image, ImageTk
 import mysql.connector
 from mysql.connector import Error
 import tkinter.messagebox as mbx 
-
+from store import config
 
 class studentWindow:
     def __init__(self):
@@ -150,7 +150,7 @@ class studentWindow:
     def byid(self):
         Studenrid= self.stdid.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT Sname,RollNo,RegNo,Gender,Sem,DOB,Topic,Dept,MobNo,Email,Locat FROM student where id={Studenrid}")
             mydata=cursor.fetchall()
@@ -195,7 +195,7 @@ class studentWindow:
     def byemail(self):
         Studenremail= self.email.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT Sname,RollNo,RegNo,Gender,Sem,DOB,Topic,Dept,MobNo, id,Locat FROM student where Email='{Studenremail}'")
             mydata=cursor.fetchall()
@@ -240,7 +240,7 @@ class studentWindow:
     def byregno(self):
         Studenri= self.regno.get()
         try:
-            conn = mysql.connector.connect(host='127.0.0.1',database='lms',user='root',password='Maya@786')
+            conn = mysql.connector.connect(**config)
             cursor = conn.cursor()
             cursor.execute(f"SELECT Sname,RollNo,id,Gender,Sem,DOB,Topic,Dept,MobNo,Email,Locat FROM student where RegNo='{Studenri}'")
             mydata=cursor.fetchall()
